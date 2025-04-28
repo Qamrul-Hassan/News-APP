@@ -1,25 +1,15 @@
 import { create } from 'zustand';
+import { NewsApiResponse, NewsArticle } from '../types';
 
-interface Article {
-  category: string | null;
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string;
-}
+// Your actual API key from NewsAPI
+const API_KEY = '4dd36a4de906441b9103c1b205d11073';  
+const BASE_URL = 'https://newsapi.org/v2/top-headlines'; // Base URL for NewsAPI
 
 interface NewsState {
-  articles: Article[];
+  articles: NewsArticle[];
   isLoading: boolean;
   error: string | null;
-  fetchNews: () => Promise<void>;
+  fetchNews: (category: string) => Promise<{ articles: NewsArticle[] }>;
 }
 
 export const useNewsStore = create<NewsState>((set) => ({
@@ -27,22 +17,29 @@ export const useNewsStore = create<NewsState>((set) => ({
   isLoading: false,
   error: null,
 
-  fetchNews: async () => {
-    set({ isLoading: true, error: null });
+  fetchNews: async (category: string) => {
     try {
-      const res = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=4dd36a4de906441b9103c1b205d11073`
-      );
-      const data = await res.json();
+      set({ isLoading: true, error: null });
 
-      if (data.status !== 'ok') {
-        throw new Error(data.message || 'Failed to fetch news');
+      // Fetch news data from NewsAPI
+      const response = await fetch(`${BASE_URL}?category=${category}&apiKey=${API_KEY}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch news');
       }
 
-      set({ articles: data.articles, isLoading: false });
+      const data: NewsApiResponse = await response.json();
+      const articles = data.articles || [];
+
+      set({ articles, isLoading: false });
+      return { articles }; // Return the fetched articles
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-      set({ error: errorMessage, isLoading: false });
+      if (error instanceof Error) {
+        set({ error: error.message, isLoading: false });
+      } else {
+        set({ error: 'An unknown error occurred.', isLoading: false });
+      }
+      return { articles: [] }; // Return empty array if error occurs
     }
-  },
+  }
 }));

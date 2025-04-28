@@ -1,15 +1,25 @@
-'use client';
+// app/page.tsx
+'use client';  // This ensures that this component is rendered on the client-side
 
+import { NewsArticle } from './NewsArticle';  // Adjust the import path as needed
 import { useEffect } from 'react';
+import { useNewsStore } from './store/newsStore';
 import Image from 'next/image';
-import { useNewsStore } from '../app/store/newsStore';
 
 export default function Home() {
   const { articles, fetchNews, isLoading, error } = useNewsStore();
 
   useEffect(() => {
-    fetchNews();
-  }, [fetchNews]);
+    const fetchData = async () => {
+      try {
+        await fetchNews('general');  // Add a category or other argument if needed
+      } catch (err) {
+        console.error('Error fetching news:', err);
+      }
+    };
+
+    fetchData();
+  }, [fetchNews]);  // Dependency on fetchNews to ensure it's only called when that changes
 
   return (
     <main className="min-h-screen py-12 px-6 bg-gradient-to-b from-white to-gray-100">
@@ -23,7 +33,7 @@ export default function Home() {
       )}
 
       {error && (
-        <p className="text-center text-red-500 text-lg">a
+        <p className="text-center text-red-500 text-lg">
           {error || 'Failed to load news. Please try again later.'}
         </p>
       )}
@@ -33,7 +43,7 @@ export default function Home() {
       )}
 
       <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-        {articles.map((article, index) => (
+        {articles.map((article: NewsArticle, index: number) => (
           <article
             key={index}
             className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col group"
