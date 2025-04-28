@@ -43,7 +43,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center">
               <div className="relative w-12 h-12 md:w-25 md:h-25"> {/* Larger logo */}
                 <Image
-                  src="/Flash.png"
+                  src="/logo.png"
                   alt="Flash News Logo"
                   fill
                   className="object-contain"
