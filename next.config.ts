@@ -1,7 +1,8 @@
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
-  turbopack: {},
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: ['example.com'], // replace with actual domain you're using
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
