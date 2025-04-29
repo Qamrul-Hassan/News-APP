@@ -40,15 +40,15 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/" className="flex items-center">
-            <div className="relative w-12 h-12 md:w-20 md:h-20">
-  <Image
-    src="/logo.png" // Adjust the path to your logo 
-    alt="Flash News Logo"
-    fill
-    className="object-contain"
-    priority
-  />
-</div>
+              <div className="relative w-12 h-12 md:w-20 md:h-20">
+                <Image
+                  src="/logo.png"
+                  alt="Flash News Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
               <span className="ml-3 text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Flash News
               </span>
@@ -58,7 +58,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
             <NavLink href="/">Home</NavLink>
-            <NavLink href="/world">World</NavLink>
+            <NavLink href="/business">Business</NavLink>
 
             {/* Technology Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -119,7 +119,7 @@ export default function Navbar() {
         <div className="md:hidden bg-white dark:bg-neutral-800 shadow-xl">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <MobileLink href="/" onClick={toggleMenu}>Home</MobileLink>
-            <MobileLink href="/world" onClick={toggleMenu}>World</MobileLink>
+            <MobileLink href="/business" onClick={toggleMenu}>Business</MobileLink>
 
             {/* Mobile Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -157,7 +157,7 @@ export default function Navbar() {
   );
 }
 
-// Desktop Navigation Link
+// Desktop Navigation Link component
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
@@ -170,7 +170,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-// Dropdown Menu Link
+// Dropdown Menu Link component
 function DropdownLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
@@ -182,7 +182,7 @@ function DropdownLink({ href, children }: { href: string; children: React.ReactN
   );
 }
 
-// Mobile Navigation Link
+// Mobile Navigation Link component
 function MobileLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
   return (
     <Link
