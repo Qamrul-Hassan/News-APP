@@ -1,5 +1,7 @@
+'use client';  // This ensures that this store is used on the client-side
 import { create } from 'zustand';
 import { NewsApiResponse, NewsArticle } from '../types';
+
 
 // Your actual API key from NewsAPI
 const API_KEY = '4dd36a4de906441b9103c1b205d11073';  
