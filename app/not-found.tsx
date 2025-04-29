@@ -1,6 +1,6 @@
 import Image from 'next/image'; // Import Image component
 import Link from 'next/link';
-import NotFoundImage from '../public/images/404.jpg'; // Import the image
+import NotFoundImage from '../public/404.jpg'; // Import the image
 
 export default function NotFound() {
   return (

@@ -11,7 +11,7 @@ export default function Navbar() {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    if (isOpen) {
+    if (!isOpen) {
       setDropdownOpen(false);
     }
   };
@@ -27,7 +27,6 @@ export default function Navbar() {
         setDropdownOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -37,30 +36,30 @@ export default function Navbar() {
   return (
     <nav className="bg-white dark:bg-neutral-900 shadow-lg sticky top-0 z-50 border-b border-gray-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20"> {/* Increased height */}
-          {/* Logo and Brand - Larger on desktop */}
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/" className="flex items-center">
-              <div className="relative w-12 h-12 md:w-25 md:h-25"> {/* Larger logo */}
-                <Image
-                  src="/logo.png"
-                  alt="Flash News Logo"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
+            <div className="relative w-12 h-12 md:w-20 md:h-20">
+  <Image
+    src="/logo.png" // Adjust the path to your logo 
+    alt="Flash News Logo"
+    fill
+    className="object-contain"
+    priority
+  />
+</div>
               <span className="ml-3 text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Flash News
               </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation - Larger text */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/world">World</NavLink>
-            
+
             {/* Technology Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
@@ -78,7 +77,7 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
+
               {dropdownOpen && (
                 <div className="absolute left-0 mt-2 w-64 origin-top-right bg-white dark:bg-neutral-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                   <div className="py-1">
@@ -94,7 +93,7 @@ export default function Navbar() {
             <NavLink href="/about">About</NavLink>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
@@ -115,13 +114,13 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Menu */}
       {isOpen && (
         <div className="md:hidden bg-white dark:bg-neutral-800 shadow-xl">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <MobileLink href="/" onClick={toggleMenu}>Home</MobileLink>
             <MobileLink href="/world" onClick={toggleMenu}>World</MobileLink>
-            
+
             {/* Mobile Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
@@ -139,7 +138,7 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
+
               {dropdownOpen && (
                 <div className="pl-4 space-y-1">
                   <MobileLink href="/technology/web" onClick={toggleMenu}>Web Development</MobileLink>
@@ -158,7 +157,7 @@ export default function Navbar() {
   );
 }
 
-// Desktop NavLink Component - Larger text
+// Desktop Navigation Link
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
@@ -171,7 +170,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-// Dropdown Link Component - Larger text
+// Dropdown Menu Link
 function DropdownLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
@@ -183,7 +182,7 @@ function DropdownLink({ href, children }: { href: string; children: React.ReactN
   );
 }
 
-// Mobile NavLink Component - Slightly larger text
+// Mobile Navigation Link
 function MobileLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
   return (
     <Link
