@@ -1,11 +1,10 @@
-'use client';  // This ensures that this store is used on the client-side
+'use client';  // Ensures this store runs on the client-side
+
 import { create } from 'zustand';
 import { NewsApiResponse, NewsArticle } from '../types';
 
-
-// Your actual API key from NewsAPI
-const API_KEY = '4dd36a4de906441b9103c1b205d11073';  
-const BASE_URL = 'https://newsapi.org/v2/top-headlines'; // Base URL for NewsAPI
+const API_KEY = '4dd36a4de906441b9103c1b205d11073';  // API Key for NewsAPI
+const BASE_URL = 'https://newsapi.org/v2/top-headlines';  // NewsAPI base URL
 
 interface NewsState {
   articles: NewsArticle[];
@@ -34,14 +33,14 @@ export const useNewsStore = create<NewsState>((set) => ({
       const articles = data.articles || [];
 
       set({ articles, isLoading: false });
-      return { articles }; // Return the fetched articles
+      return { articles };  // Return the fetched articles
     } catch (error: unknown) {
       if (error instanceof Error) {
         set({ error: error.message, isLoading: false });
       } else {
         set({ error: 'An unknown error occurred.', isLoading: false });
       }
-      return { articles: [] }; // Return empty array if error occurs
+      return { articles: [] };  // Return empty array if error occurs
     }
   }
 }));
