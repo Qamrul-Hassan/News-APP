@@ -24,9 +24,12 @@ export default async function SportsPage() {
   return (
     <main className="min-h-screen py-12 px-6 bg-gradient-to-b from-white to-gray-100">
       <header className="text-center mb-12">
-        <h1 className="text-5xl font-extrabold text-blue-700 mb-4">Sports News 🏅</h1>
-        <p className="text-gray-600 text-lg">Latest updates from the world of sports</p>
-      </header>
+  <div className="flex items-center justify-center gap-4 mb-4">
+    <span className="text-4xl">🏆</span>
+    <h1 className="text-5xl font-extrabold text-blue-700">Sports News</h1>
+  </div>
+  <p className="text-gray-600 text-lg">Latest updates from the world of sports</p>
+</header>
 
       {articles.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">No sports news found.</p>

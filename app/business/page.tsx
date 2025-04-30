@@ -1,25 +1,18 @@
-// app/business/page.tsx
-// Server Component: Fetch business news using NewsAPI top-headlines endpoint
-
 import Image from 'next/image';
-import { NewsArticle } from '../types';  // adjust path to your types
+import { NewsArticle } from '../types';
 
-// Disable caching for testing
 export const revalidate = 0;
 
 export default async function BusinessPage() {
-  // Hardcoded API key for testing. Move to env var in production.
   const API_KEY = '4dd36a4de906441b9103c1b205d11073';
+  const category = 'business';
 
-  // Fetch Business news data on the server
   const res = await fetch(
-    `https://newsapi.org/v2/top-headlines?category=business&apiKey=${API_KEY}`,
+    `https://newsapi.org/v2/top-headlines?category=${category}&language=en&pageSize=12&apiKey=${API_KEY}`,
     { cache: 'no-store' }
   );
 
-  if (!res.ok) {
-    throw new Error(`NewsAPI error: ${res.status}`);
-  }
+  if (!res.ok) throw new Error(`NewsAPI error: ${res.status}`);
 
   const data: { articles: NewsArticle[] } = await res.json();
   const articles = data.articles || [];
@@ -27,42 +20,29 @@ export default async function BusinessPage() {
   return (
     <main className="min-h-screen py-12 px-6 bg-gradient-to-b from-white to-gray-100">
       <header className="text-center mb-12">
-        <h1 className="text-5xl font-extrabold text-blue-700 mb-4">
-          📰 Business News
-        </h1>
-        <p className="text-gray-600 text-lg">
-          Latest business headlines
-        </p>
+        <h1 className="text-5xl font-extrabold text-blue-700 mb-4">📈 Business News</h1>
+        <p className="text-gray-600 text-lg">Latest headlines in finance, markets, and economy</p>
       </header>
 
       {articles.length === 0 ? (
-        <p className="text-center text-gray-500 text-lg">No articles found.</p>
+        <p className="text-center text-gray-500 text-lg">No business news found.</p>
       ) : (
-        <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-          {articles.map((article: NewsArticle, idx: number) => (
-            <article
-              key={idx}
-              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col group"
-            >
+        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article, idx) => (
+            <article key={idx} className="bg-white rounded-xl shadow-lg hover:shadow-2xl overflow-hidden flex flex-col group">
               <div className="relative w-full h-60">
                 <Image
                   src={article.urlToImage || '/news-app.jpg'}
-                  alt={article.title || 'News Image'}
+                  alt={article.title || 'Business News'}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
                   unoptimized
                 />
               </div>
-
               <div className="p-6 flex flex-col flex-grow">
-                <h2 className="text-2xl font-bold mb-3 line-clamp-2 text-gray-900">
-                  {article.title}
-                </h2>
-                <p className="text-gray-600 mb-6 line-clamp-3 flex-grow">
-                  {article.description}
-                </p>
+                <h2 className="text-2xl font-bold mb-3 line-clamp-2">{article.title}</h2>
+                <p className="text-gray-600 mb-6 line-clamp-3 flex-grow">{article.description}</p>
                 <a
                   href={article.url}
                   target="_blank"

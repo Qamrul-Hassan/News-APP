@@ -19,7 +19,7 @@ export default async function BlockchainPage() {
   return (
     <main className="min-h-screen py-12 px-6 bg-gradient-to-b from-white to-gray-100">
       <header className="text-center mb-12">
-        <h1 className="text-5xl font-extrabold text-blue-700 mb-4">📰 Blockchain News</h1>
+      <h1 className="text-5xl font-extrabold text-blue-700 mb-4">🪙 Blockchain News</h1>
         <p className="text-gray-600 text-lg">Latest articles on blockchain technology</p>
       </header>
       {articles.length === 0 ? (
