@@ -62,9 +62,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      <footer className="mt-20 text-center text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} Tech News. All rights reserved.
-      </footer>
+      
     </main>
   );
 }
