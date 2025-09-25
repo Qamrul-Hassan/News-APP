@@ -1,7 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+<<<<<<< HEAD
 import { Article } from '../types'; // make sure this path is correct
+=======
+import { Article } from '../types'; 
+>>>>>>> b568c11251e33e376fd5f0e978044ff5a53bca2b
 
 type NewsCardProps = {
   article: Article;
