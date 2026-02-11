@@ -114,7 +114,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
           <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-[color:var(--border-color)] bg-[color:var(--surface-strong)] sm:h-11 sm:w-11">
-            <Image src="/logo.png" alt="Flash News logo" fill className="object-contain p-1" priority />
+            <Image src="/logo.png" alt="Flash News logo" fill className="object-contain p-1" />
           </div>
           <span className="bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 bg-clip-text text-xl font-black tracking-tight text-transparent sm:text-2xl">
             Flash News
