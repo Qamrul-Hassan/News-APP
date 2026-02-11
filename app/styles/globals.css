@@ -94,6 +94,94 @@ body {
   color: #ffffff;
 }
 
+.theme-toggle-btn {
+  padding: 0.38rem 0.62rem;
+  font-size: 0.76rem;
+}
+
+.theme-toggle-btn-icon {
+  position: relative;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border-radius: 9999px;
+}
+
+.theme-toggle-icon-wrap {
+  position: relative;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 240ms ease, opacity 240ms ease, color 240ms ease;
+}
+
+.theme-toggle-icon-sun {
+  color: #f59e0b;
+}
+
+.theme-toggle-icon-moon {
+  color: #93c5fd;
+}
+
+.theme-toggle-btn[data-theme-state="dark"] .theme-toggle-icon-sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle-btn[data-theme-state="dark"] .theme-toggle-icon-moon {
+  opacity: 0;
+  transform: scale(0.35) rotate(-90deg);
+}
+
+.theme-toggle-btn[data-theme-state="light"] .theme-toggle-icon-sun {
+  opacity: 0;
+  transform: scale(0.35) rotate(90deg);
+}
+
+.theme-toggle-btn[data-theme-state="light"] .theme-toggle-icon-moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+@keyframes theme-toggle-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  45% {
+    transform: scale(0.88) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.theme-toggle-animate {
+  animation: theme-toggle-pop 320ms ease;
+}
+
+@media (min-width: 640px) {
+  .theme-toggle-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.86rem;
+  }
+
+  .theme-toggle-btn-icon {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .theme-toggle-icon-wrap {
+    width: 1.22rem;
+    height: 1.22rem;
+  }
+}
+
 summary::-webkit-details-marker {
   display: none;
 }
@@ -127,5 +215,14 @@ summary::marker {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .theme-toggle-btn,
+  .theme-toggle-icon {
+    transition-duration: 220ms !important;
+  }
+
+  .theme-toggle-animate {
+    animation-duration: 220ms !important;
   }
 }
