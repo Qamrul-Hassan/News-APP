@@ -1,12 +1,8 @@
-// components/Loading.tsx
 export default function Loading() {
-    return (
-      <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-black z-50">
-        <div className="flex items-center justify-center space-x-3">
-          <div className="w-16 h-16 border-4 border-t-4 border-white rounded-full animate-spin"></div>
-        </div>
-        <h1 className="text-3xl font-extrabold text-white mt-4 drop-shadow-lg">Loading...</h1>
-      </div>
-    );
-  }
-  
+  return (
+    <div className="flex min-h-[40vh] w-full flex-col items-center justify-center gap-4" role="status" aria-live="polite" aria-label="Loading content">
+      <div className="h-12 w-12 rounded-full border-4 border-slate-200 border-t-slate-700 motion-safe:animate-spin" />
+      <p className="text-sm font-semibold text-slate-600">Loading latest stories...</p>
+    </div>
+  );
+}

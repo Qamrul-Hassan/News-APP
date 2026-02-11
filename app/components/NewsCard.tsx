@@ -1,41 +1,65 @@
-'use client';
-
-import Image from 'next/image';
-<<<<<<< HEAD
-import { Article } from '../types'; // make sure this path is correct
-=======
-import { Article } from '../types'; 
->>>>>>> b568c11251e33e376fd5f0e978044ff5a53bca2b
+import Image from "next/image";
+import { NewsArticle } from "../types";
 
 type NewsCardProps = {
-  article: Article;
+  article: NewsArticle;
+  index: number;
+  accent?: "blue" | "emerald" | "amber";
 };
 
-export default function NewsCard({ article }: NewsCardProps) {
+const accentStyles = {
+  blue: "from-blue-600 to-cyan-500",
+  emerald: "from-emerald-600 to-teal-500",
+  amber: "from-amber-500 to-orange-500",
+};
+
+export default function NewsCard({ article, index, accent = "blue" }: NewsCardProps) {
+  const publishedDate = article.publishedAt
+    ? new Date(article.publishedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null;
+
   return (
-    <article className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col group">
-      <div className="relative w-full h-60">
+    <article
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/85 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transition-none"
+      style={{ animationDelay: `${Math.min(index, 8) * 60}ms` }}
+    >
+      <div className="relative h-56 w-full overflow-hidden bg-slate-800">
         <Image
-          src={article.urlToImage || '/news-app.jpg'}
-          alt={article.title || 'News Image'}
+          src={article.urlToImage || "/logo.png"}
+          alt={article.title || "News image"}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority
+          className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
           unoptimized
         />
       </div>
 
-      <div className="p-6 flex flex-col flex-grow">
-        <h2 className="text-2xl font-bold mb-3 line-clamp-2 text-gray-900">{article.title}</h2>
-        <p className="text-gray-600 mb-6 line-clamp-3 flex-grow">{article.description}</p>
+      <div className="flex flex-1 flex-col p-5">
+        {publishedDate ? (
+          <time dateTime={article.publishedAt} className="text-xs font-medium uppercase tracking-wide text-slate-400">
+            {publishedDate}
+          </time>
+        ) : null}
+
+        <h2 className="mt-2 text-lg font-bold leading-tight text-slate-100 line-clamp-2">{article.title || "Untitled story"}</h2>
+
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-300 line-clamp-3">
+          {article.description || "Read the full article for more details."}
+        </p>
+
         <a
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block text-green-600 font-semibold hover:underline mt-auto"
+          className={`mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r ${accentStyles[accent]} px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-300 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-slate-900 motion-reduce:transition-none`}
+          aria-label={`Read full article: ${article.title || "news item"}`}
         >
-          Read Full Story →
+          Read story
+          <span aria-hidden="true">{"->"}</span>
         </a>
       </div>
     </article>

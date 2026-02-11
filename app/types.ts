@@ -1,20 +1,16 @@
-// types.ts
-export type Article = {
-    title: string;
-    description: string;
-    url: string;
-    urlToImage?: string; // ✅ allow optional
+export type NewsArticle = {
+  title: string | null;
+  description: string | null;
+  url: string;
+  urlToImage?: string | null;
+  publishedAt?: string;
+  source?: {
+    name?: string;
   };
-  
-  
-  export type NewsArticle = {
-    title: string;
-    description: string;
-    url: string;
-    urlToImage?: string; // can be undefined
-  };
-  
-  export type NewsApiResponse = {
-    articles: NewsArticle[];
-  };
-  
+};
+
+export type NewsApiResponse = {
+  status?: string;
+  message?: string;
+  articles?: NewsArticle[];
+};

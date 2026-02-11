@@ -1,31 +1,52 @@
+import Link from "next/link";
+
+const quickLinks = [
+  { href: "/world", label: "World" },
+  { href: "/business", label: "Business" },
+  { href: "/politics", label: "Politics" },
+  { href: "/sports", label: "Sports" },
+  { href: "/technology/tech-news", label: "Technology" },
+  { href: "/health", label: "Health" },
+  { href: "/science", label: "Science" },
+  { href: "/astronomy", label: "Astronomy" },
+  { href: "/media", label: "Media" },
+  { href: "/car-industry", label: "Car Industry" },
+  { href: "/share-market", label: "Share Market" },
+];
+
 export default function Footer() {
-<<<<<<< HEAD
   return (
-    <footer className="bg-white dark:bg-neutral-900 shadow-inner py-6">
-      <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
-        <p className="text-sm text-gray-600 dark:text-gray-200">
-          © {new Date().getFullYear()} NewsWave. All rights reserved.
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-200 mt-2 sm:mt-0">
-          Built with ❤️ using Next.js and Tailwind CSS
-        </p>
+    <footer className="border-t border-slate-800 bg-[#050816]">
+      <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-wide text-slate-100">Flash News Global Desk</p>
+            <p className="mt-2 max-w-md text-sm text-slate-300">
+              Professional, fast, and mobile-first international news coverage with accessibility-first design.
+            </p>
+          </div>
+
+          <nav aria-label="Footer quick links" className="max-w-md">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Sections</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200 transition hover:border-blue-400 hover:bg-slate-900 hover:text-blue-200"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        </div>
+
+        <div className="mt-6 flex flex-col items-start justify-between gap-2 border-t border-slate-800 pt-4 text-sm text-slate-300 sm:flex-row sm:items-center">
+          <p>Copyright {new Date().getFullYear()} Flash News. All rights reserved.</p>
+          <p>Built with Next.js and Tailwind CSS.</p>
+        </div>
       </div>
     </footer>
   );
 }
-=======
-    return (
-      <footer className="bg-white dark:bg-neutral-900 shadow-inner py-6">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} Flash News. All rights reserved.
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 sm:mt-0">
-            Built with ❤️ using Next.js and Tailwind CSS
-          </p>
-        </div>
-      </footer>
-    );
-  }
-  
->>>>>>> b568c11251e33e376fd5f0e978044ff5a53bca2b

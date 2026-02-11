@@ -1,146 +1,271 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+type NavItem = {
+  href: string;
+  label: string;
+};
+
+const primaryItems: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/world", label: "World" },
+  { href: "/business", label: "Business" },
+  { href: "/politics", label: "Politics" },
+  { href: "/sports", label: "Sports" },
+];
+
+const technologyLinks: NavItem[] = [
+  { href: "/technology/tech-news", label: "Tech News" },
+  { href: "/technology/ai", label: "AI & ML" },
+  { href: "/technology/blockchain", label: "Blockchain" },
+];
+
+const moreLinks: NavItem[] = [
+  { href: "/health", label: "Health" },
+  { href: "/science", label: "Science" },
+  { href: "/astronomy", label: "Astronomy" },
+  { href: "/media", label: "Media" },
+  { href: "/car-industry", label: "Car Industry" },
+  { href: "/share-market", label: "Share Market" },
+  { href: "/about", label: "About" },
+];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
-  const desktopDropdownRef = useRef<HTMLDivElement>(null);
-  const mobileDropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
-  const toggleMenu = () => {
-    setIsOpen(prev => !prev);
-    setMobileDropdownOpen(false);
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [desktopTechOpen, setDesktopTechOpen] = useState(false);
+  const [desktopMoreOpen, setDesktopMoreOpen] = useState(false);
+  const [mobileTechOpen, setMobileTechOpen] = useState(false);
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
+
+  const desktopTechRef = useRef<HTMLDivElement>(null);
+  const desktopMoreRef = useRef<HTMLDivElement>(null);
+  const mobileTechRef = useRef<HTMLDivElement>(null);
+  const mobileMoreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        desktopDropdownRef.current &&
-        !desktopDropdownRef.current.contains(event.target as Node)
-      ) {
-        setDesktopDropdownOpen(false);
+    setMobileOpen(false);
+    setDesktopTechOpen(false);
+    setDesktopMoreOpen(false);
+    setMobileTechOpen(false);
+    setMobileMoreOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const onMouseDown = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (desktopTechRef.current && !desktopTechRef.current.contains(target)) {
+        setDesktopTechOpen(false);
       }
-      if (
-        mobileDropdownRef.current &&
-        !mobileDropdownRef.current.contains(event.target as Node)
-      ) {
-        setMobileDropdownOpen(false);
+
+      if (desktopMoreRef.current && !desktopMoreRef.current.contains(target)) {
+        setDesktopMoreOpen(false);
+      }
+
+      if (mobileTechRef.current && !mobileTechRef.current.contains(target)) {
+        setMobileTechOpen(false);
+      }
+
+      if (mobileMoreRef.current && !mobileMoreRef.current.contains(target)) {
+        setMobileMoreOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setDesktopTechOpen(false);
+        setDesktopMoreOpen(false);
+        setMobileTechOpen(false);
+        setMobileMoreOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
+  const isActive = (href: string) => pathname === href;
+  const isTechActive = pathname.startsWith("/technology");
+  const isMoreActive = ["/health", "/science", "/astronomy", "/media", "/car-industry", "/share-market", "/about"].some((href) =>
+    pathname.startsWith(href)
+  );
+
+  const navClass = (active: boolean) => `btn-nav inline-flex items-center ${active ? "btn-nav-active" : ""}`;
+  const dropdownClass = (active: boolean) => `btn-nav inline-flex items-center cursor-pointer ${active ? "btn-nav-active" : ""}`;
+
   return (
-    <nav className="bg-white dark:bg-neutral-900 shadow-lg sticky top-0 z-50 border-b border-gray-200 dark:border-neutral-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="relative w-12 h-12 md:w-20 md:h-20">
-              <Image src="/logo.png" alt="Flash News Logo" fill className="object-contain" priority />
-            </div>
-            <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Flash News
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/business">Business</NavLink>
-            <div className="relative" ref={desktopDropdownRef}>
-              <button
-                onClick={() => setDesktopDropdownOpen(prev => !prev)}
-                className="flex items-center px-4 py-2 text-lg text-neutral-700 dark:text-gray-200 hover:text-blue-600 transition-colors duration-200"
-              >
-                Technology
-                <svg xmlns="http://www.w3.org/2000/svg" className={`ml-2 h-5 w-5 transition-transform ${desktopDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {desktopDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-neutral-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-                  <DropdownLink href="/technology/tech-news">Tech News</DropdownLink>
-                  <DropdownLink href="/technology/ai">AI & Machine Learning</DropdownLink>
-                  <DropdownLink href="/technology/blockchain">Blockchain</DropdownLink>
-                </div>
-              )}
-            </div>
-            <NavLink href="/sports">Sports</NavLink>
-            <NavLink href="/about">About</NavLink>
+    <nav className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#050816]/95 backdrop-blur-md" aria-label="Main navigation">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="group flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900">
+          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-slate-700 bg-slate-900 sm:h-11 sm:w-11">
+            <Image src="/logo.png" alt="Flash News logo" fill className="object-contain p-1" priority />
           </div>
+          <span className="bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 bg-clip-text text-xl font-black tracking-tight text-transparent sm:text-2xl">
+            Flash News
+          </span>
+        </Link>
 
-          {/* Mobile Menu Button */}
-          <button onClick={toggleMenu} className="md:hidden p-2 rounded-md text-neutral-700 dark:text-gray-200 hover:text-blue-600 hover:bg-gray-100 focus:outline-none">
-            {isOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
+        <div className="hidden items-center gap-1 md:flex lg:gap-2">
+          {primaryItems.map((item) => (
+            <Link key={item.href} href={item.href} className={navClass(isActive(item.href))}>
+              {item.label}
+            </Link>
+          ))}
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white dark:bg-neutral-800 shadow-lg">
-          <MobileLink href="/" onClick={toggleMenu}>Home</MobileLink>
-          <MobileLink href="/business" onClick={toggleMenu}>Business</MobileLink>
-          <div className="px-4 py-2" ref={mobileDropdownRef}>
+          <div className="relative" ref={desktopTechRef}>
             <button
-              onClick={() => setMobileDropdownOpen(prev => !prev)}
-              className="w-full flex justify-between items-center py-2 text-lg font-medium text-neutral-700 dark:text-gray-200"
+              type="button"
+              className={dropdownClass(isTechActive)}
+              onClick={() => {
+                setDesktopTechOpen((prev) => !prev);
+                setDesktopMoreOpen(false);
+              }}
+              aria-expanded={desktopTechOpen}
+              aria-controls="desktop-tech-menu"
             >
               Technology
-              <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform ${mobileDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <span className={`text-xs transition-transform ${desktopTechOpen ? "rotate-180" : ""}`} aria-hidden="true">
+                v
+              </span>
             </button>
-            {mobileDropdownOpen && (
-              <div className="mt-2 space-y-1">
-                <MobileLink href="/technology/tech-news" onClick={toggleMenu}>Tech News</MobileLink>
-                <MobileLink href="/technology/ai" onClick={toggleMenu}>AI & Machine Learning</MobileLink>
-                <MobileLink href="/technology/blockchain" onClick={toggleMenu}>Blockchain</MobileLink>
+            {desktopTechOpen ? (
+              <div id="desktop-tech-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-700 bg-slate-900 p-2 shadow-xl motion-safe:animate-pop-in">
+                {technologyLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`block rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                      isActive(link.href) ? "bg-blue-600 text-white" : "text-slate-200 hover:bg-slate-800"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
-            )}
+            ) : null}
           </div>
-          <MobileLink href="/sports" onClick={toggleMenu}>Sports</MobileLink>
-          <MobileLink href="/about" onClick={toggleMenu}>About</MobileLink>
+
+          <div className="relative" ref={desktopMoreRef}>
+            <button
+              type="button"
+              className={dropdownClass(isMoreActive)}
+              onClick={() => {
+                setDesktopMoreOpen((prev) => !prev);
+                setDesktopTechOpen(false);
+              }}
+              aria-expanded={desktopMoreOpen}
+              aria-controls="desktop-more-menu"
+            >
+              More
+              <span className={`text-xs transition-transform ${desktopMoreOpen ? "rotate-180" : ""}`} aria-hidden="true">
+                v
+              </span>
+            </button>
+            {desktopMoreOpen ? (
+              <div id="desktop-more-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-700 bg-slate-900 p-2 shadow-xl motion-safe:animate-pop-in">
+                {moreLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`block rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                      isActive(link.href) ? "bg-blue-600 text-white" : "text-slate-200 hover:bg-slate-800"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
-      )}
+
+        <button
+          type="button"
+          className="btn-nav inline-flex items-center cursor-pointer md:hidden"
+          onClick={() => setMobileOpen((prev) => !prev)}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
+        >
+          Menu
+        </button>
+
+        {mobileOpen ? (
+          <div id="mobile-menu" className="absolute left-0 right-0 top-20 border-t border-slate-700 bg-[#081127] px-4 py-4 shadow-md md:hidden">
+            <div className="flex flex-col gap-2">
+              {primaryItems.map((item) => (
+                <Link key={item.href} href={item.href} className={`${navClass(isActive(item.href))} w-full justify-start`}>
+                  {item.label}
+                </Link>
+              ))}
+
+              <div className="rounded-xl border border-slate-700 p-2" ref={mobileTechRef}>
+                <button
+                  type="button"
+                  className={`${dropdownClass(isTechActive)} w-full justify-between`}
+                  onClick={() => {
+                    setMobileTechOpen((prev) => !prev);
+                    setMobileMoreOpen(false);
+                  }}
+                  aria-expanded={mobileTechOpen}
+                  aria-controls="mobile-tech-menu"
+                >
+                  Technology
+                  <span className={`text-xs transition-transform ${mobileTechOpen ? "rotate-180" : ""}`} aria-hidden="true">
+                    v
+                  </span>
+                </button>
+                {mobileTechOpen ? (
+                  <div id="mobile-tech-menu" className="mt-2 space-y-2">
+                    {technologyLinks.map((link) => (
+                      <Link key={link.href} href={link.href} className={`${navClass(isActive(link.href))} w-full justify-start`}>
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="rounded-xl border border-slate-700 p-2" ref={mobileMoreRef}>
+                <button
+                  type="button"
+                  className={`${dropdownClass(isMoreActive)} w-full justify-between`}
+                  onClick={() => {
+                    setMobileMoreOpen((prev) => !prev);
+                    setMobileTechOpen(false);
+                  }}
+                  aria-expanded={mobileMoreOpen}
+                  aria-controls="mobile-more-menu"
+                >
+                  More
+                  <span className={`text-xs transition-transform ${mobileMoreOpen ? "rotate-180" : ""}`} aria-hidden="true">
+                    v
+                  </span>
+                </button>
+                {mobileMoreOpen ? (
+                  <div id="mobile-more-menu" className="mt-2 space-y-2">
+                    {moreLinks.map((link) => (
+                      <Link key={link.href} href={link.href} className={`${navClass(isActive(link.href))} w-full justify-start`}>
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
     </nav>
-  );
-}
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link href={href} className="px-4 py-2 text-lg font-medium text-neutral-700 dark:text-gray-200 hover:text-blue-600 transition-colors duration-200">
-      {children}
-    </Link>
-  );
-}
-
-function DropdownLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link href={href} className="block px-4 py-2 text-neutral-700 dark:text-gray-200 hover:bg-gray-100 transition-colors duration-150">
-      {children}
-    </Link>
-  );
-}
-
-function MobileLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
-  return (
-    <Link href={href} onClick={onClick} className="block px-4 py-2 text-lg font-medium text-neutral-700 dark:text-gray-200 hover:bg-gray-100 transition-colors duration-150">
-      {children}
-    </Link>
   );
 }
