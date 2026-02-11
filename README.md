@@ -9,6 +9,9 @@ Flash News is a Next.js application for browsing live headlines across world, bu
 - Category and topic pages with reusable `NewsPage` layout
 - Mobile-friendly navigation with section dropdowns
 - Auto-refresh support for near real-time updates
+- Light/dark theme toggle (floating action button)
+- Theme persistence via `localStorage`
+- Automatic fallback to system theme (`prefers-color-scheme`)
 
 ## Sections
 

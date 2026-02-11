@@ -4,6 +4,35 @@
 :root {
   --background: #050816;
   --foreground: #e2e8f0;
+  --bg-radial-1: rgba(59, 130, 246, 0.22);
+  --bg-radial-2: rgba(56, 189, 248, 0.16);
+  --bg-top: rgba(7, 12, 29, 0.92);
+  --bg-bottom: rgba(5, 8, 22, 0.98);
+  --surface: rgba(15, 23, 42, 0.85);
+  --surface-strong: #0f172a;
+  --surface-soft: rgba(30, 41, 59, 0.72);
+  --border-color: #334155;
+  --muted-text: #94a3b8;
+  --heading-text: #f8fafc;
+  --btn-bg: rgba(15, 23, 42, 0.88);
+  --btn-text: #cbd5e1;
+}
+
+[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --bg-radial-1: rgba(56, 189, 248, 0.2);
+  --bg-radial-2: rgba(59, 130, 246, 0.14);
+  --bg-top: rgba(255, 255, 255, 0.92);
+  --bg-bottom: rgba(241, 245, 249, 0.98);
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-strong: #ffffff;
+  --surface-soft: rgba(241, 245, 249, 0.94);
+  --border-color: #cbd5e1;
+  --muted-text: #475569;
+  --heading-text: #0f172a;
+  --btn-bg: rgba(248, 250, 252, 0.96);
+  --btn-text: #1e293b;
 }
 
 @theme inline {
@@ -14,9 +43,9 @@
 
 body {
   background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.22), transparent 52%),
-    radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.16), transparent 44%),
-    linear-gradient(180deg, rgba(7, 12, 29, 0.92), rgba(5, 8, 22, 0.98)),
+    radial-gradient(circle at top right, var(--bg-radial-1), transparent 52%),
+    radial-gradient(circle at 20% 10%, var(--bg-radial-2), transparent 44%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom)),
     var(--background);
   color: var(--foreground);
 }
@@ -24,13 +53,13 @@ body {
 .btn-nav {
   gap: 0.5rem;
   border-radius: 9999px;
-  border: 1px solid #334155;
-  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid var(--border-color);
+  background: var(--btn-bg);
   padding: 0.5rem 0.9rem;
   font-size: 0.86rem;
   font-weight: 700;
   letter-spacing: 0.01em;
-  color: #cbd5e1;
+  color: var(--btn-text);
   transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -40,6 +69,12 @@ body {
   color: #ffffff;
   transform: translateY(-1px);
   box-shadow: 0 12px 26px rgba(29, 78, 216, 0.34);
+}
+
+[data-theme="light"] .btn-nav:hover {
+  background: linear-gradient(135deg, #e2e8f0, #bfdbfe);
+  color: #0f172a;
+  box-shadow: 0 12px 26px rgba(59, 130, 246, 0.2);
 }
 
 .btn-nav:focus-visible {

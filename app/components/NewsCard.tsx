@@ -24,10 +24,10 @@ export default function NewsCard({ article, index, accent = "blue" }: NewsCardPr
 
   return (
     <article
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/85 shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transition-none"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--border-color)] bg-[color:var(--surface)] shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transition-none"
       style={{ animationDelay: `${Math.min(index, 8) * 60}ms` }}
     >
-      <div className="relative h-56 w-full overflow-hidden bg-slate-800">
+      <div className="relative h-56 w-full overflow-hidden bg-[color:var(--surface-soft)]">
         <Image
           src={article.urlToImage || "/logo.png"}
           alt={article.title || "News image"}
@@ -40,14 +40,14 @@ export default function NewsCard({ article, index, accent = "blue" }: NewsCardPr
 
       <div className="flex flex-1 flex-col p-5">
         {publishedDate ? (
-          <time dateTime={article.publishedAt} className="text-xs font-medium uppercase tracking-wide text-slate-400">
+          <time dateTime={article.publishedAt} className="text-xs font-medium uppercase tracking-wide text-[color:var(--muted-text)]">
             {publishedDate}
           </time>
         ) : null}
 
-        <h2 className="mt-2 text-lg font-bold leading-tight text-slate-100 line-clamp-2">{article.title || "Untitled story"}</h2>
+        <h2 className="mt-2 text-lg font-bold leading-tight text-[color:var(--heading-text)] line-clamp-2">{article.title || "Untitled story"}</h2>
 
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-300 line-clamp-3">
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-[color:var(--muted-text)] line-clamp-3">
           {article.description || "Read the full article for more details."}
         </p>
 
@@ -55,7 +55,7 @@ export default function NewsCard({ article, index, accent = "blue" }: NewsCardPr
           href={article.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r ${accentStyles[accent]} px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-300 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-slate-900 motion-reduce:transition-none`}
+          className={`mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r ${accentStyles[accent]} px-4 py-2 text-sm font-semibold text-white shadow-md transition duration-300 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-[color:var(--surface-strong)] motion-reduce:transition-none`}
           aria-label={`Read full article: ${article.title || "news item"}`}
         >
           Read story

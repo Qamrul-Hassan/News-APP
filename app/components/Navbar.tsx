@@ -104,12 +104,16 @@ export default function Navbar() {
 
   const navClass = (active: boolean) => `btn-nav inline-flex items-center ${active ? "btn-nav-active" : ""}`;
   const dropdownClass = (active: boolean) => `btn-nav inline-flex items-center cursor-pointer ${active ? "btn-nav-active" : ""}`;
+  const dropdownItemClass = (active: boolean) =>
+    `block rounded-xl px-3 py-2 text-sm font-semibold transition ${
+      active ? "bg-blue-600 text-white" : "text-[color:var(--foreground)] hover:bg-[color:var(--surface-soft)]"
+    }`;
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#050816]/95 backdrop-blur-md" aria-label="Main navigation">
+    <nav className="sticky top-0 z-50 border-b border-[color:var(--border-color)] bg-[color:var(--surface)]/95 backdrop-blur-md" aria-label="Main navigation">
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900">
-          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-slate-700 bg-slate-900 sm:h-11 sm:w-11">
+        <Link href="/" className="group flex items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-[color:var(--border-color)] bg-[color:var(--surface-strong)] sm:h-11 sm:w-11">
             <Image src="/logo.png" alt="Flash News logo" fill className="object-contain p-1" priority />
           </div>
           <span className="bg-gradient-to-r from-slate-900 via-blue-700 to-cyan-500 bg-clip-text text-xl font-black tracking-tight text-transparent sm:text-2xl">
@@ -141,15 +145,9 @@ export default function Navbar() {
               </span>
             </button>
             {desktopTechOpen ? (
-              <div id="desktop-tech-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-700 bg-slate-900 p-2 shadow-xl motion-safe:animate-pop-in">
+              <div id="desktop-tech-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-[color:var(--border-color)] bg-[color:var(--surface-strong)] p-2 shadow-xl motion-safe:animate-pop-in">
                 {technologyLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`block rounded-xl px-3 py-2 text-sm font-semibold transition ${
-                      isActive(link.href) ? "bg-blue-600 text-white" : "text-slate-200 hover:bg-slate-800"
-                    }`}
-                  >
+                  <Link key={link.href} href={link.href} className={dropdownItemClass(isActive(link.href))}>
                     {link.label}
                   </Link>
                 ))}
@@ -174,15 +172,9 @@ export default function Navbar() {
               </span>
             </button>
             {desktopMoreOpen ? (
-              <div id="desktop-more-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-slate-700 bg-slate-900 p-2 shadow-xl motion-safe:animate-pop-in">
+              <div id="desktop-more-menu" className="absolute right-0 mt-3 w-56 rounded-2xl border border-[color:var(--border-color)] bg-[color:var(--surface-strong)] p-2 shadow-xl motion-safe:animate-pop-in">
                 {moreLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`block rounded-xl px-3 py-2 text-sm font-semibold transition ${
-                      isActive(link.href) ? "bg-blue-600 text-white" : "text-slate-200 hover:bg-slate-800"
-                    }`}
-                  >
+                  <Link key={link.href} href={link.href} className={dropdownItemClass(isActive(link.href))}>
                     {link.label}
                   </Link>
                 ))}
@@ -202,7 +194,7 @@ export default function Navbar() {
         </button>
 
         {mobileOpen ? (
-          <div id="mobile-menu" className="absolute left-0 right-0 top-20 border-t border-slate-700 bg-[#081127] px-4 py-4 shadow-md md:hidden">
+          <div id="mobile-menu" className="absolute left-0 right-0 top-20 border-t border-[color:var(--border-color)] bg-[color:var(--surface-strong)] px-4 py-4 shadow-md md:hidden">
             <div className="flex flex-col gap-2">
               {primaryItems.map((item) => (
                 <Link key={item.href} href={item.href} className={`${navClass(isActive(item.href))} w-full justify-start`}>
@@ -210,7 +202,7 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <div className="rounded-xl border border-slate-700 p-2" ref={mobileTechRef}>
+              <div className="rounded-xl border border-[color:var(--border-color)] p-2" ref={mobileTechRef}>
                 <button
                   type="button"
                   className={`${dropdownClass(isTechActive)} w-full justify-between`}
@@ -237,7 +229,7 @@ export default function Navbar() {
                 ) : null}
               </div>
 
-              <div className="rounded-xl border border-slate-700 p-2" ref={mobileMoreRef}>
+              <div className="rounded-xl border border-[color:var(--border-color)] p-2" ref={mobileMoreRef}>
                 <button
                   type="button"
                   className={`${dropdownClass(isMoreActive)} w-full justify-between`}
