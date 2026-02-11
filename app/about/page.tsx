@@ -16,7 +16,7 @@ export default function AboutPage() {
           Modern news reading without clutter
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-          Flash News curates top headlines in business, technology, AI, blockchain, and sports so you can scan the day quickly and open full coverage from trusted publishers.
+          Flash News curates top headlines in business, technology, AI, blockchain, crypto, and sports so you can scan the day quickly and open full coverage from trusted publishers.
         </p>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -39,6 +39,12 @@ export default function AboutPage() {
             className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
           >
             Browse AI news
+          </Link>
+          <Link
+            href="/technology/crypto"
+            className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900"
+          >
+            Browse crypto news
           </Link>
         </div>
       </header>

@@ -22,6 +22,7 @@ const technologyLinks: NavItem[] = [
   { href: "/technology/tech-news", label: "Tech News" },
   { href: "/technology/ai", label: "AI & ML" },
   { href: "/technology/blockchain", label: "Blockchain" },
+  { href: "/technology/crypto", label: "Crypto" },
 ];
 
 const moreLinks: NavItem[] = [

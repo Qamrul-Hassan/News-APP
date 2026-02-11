@@ -6,6 +6,7 @@ const quickLinks = [
   { href: "/politics", label: "Politics" },
   { href: "/sports", label: "Sports" },
   { href: "/technology/tech-news", label: "Technology" },
+  { href: "/technology/crypto", label: "Crypto" },
   { href: "/health", label: "Health" },
   { href: "/science", label: "Science" },
   { href: "/astronomy", label: "Astronomy" },
