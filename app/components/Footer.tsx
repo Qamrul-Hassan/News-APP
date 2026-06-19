@@ -45,7 +45,7 @@ export default function Footer() {
 
         <div className="mt-6 flex flex-col items-start justify-between gap-2 border-t border-[color:var(--border-color)] pt-4 text-sm text-[color:var(--muted-text)] sm:flex-row sm:items-center">
           <p>Copyright {new Date().getFullYear()} Flash News. All rights reserved.</p>
-          <p>Built with Next.js and Tailwind CSS.</p>
+          <p>Explore tools on <a href="https://costnest.site" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-500 transition-colors">CostNest</a></p>
         </div>
       </div>
     </footer>
